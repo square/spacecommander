@@ -87,5 +87,5 @@ The formatter can't do everything. It may occasionally produce an undesirable re
 
 * Refactor code to produce a line that is simpler and less confusing to the formatter.
 * Add `#pragma Formatter Exempt` as the first line of the file, and it will not be formatted at all.
-* [Wislawa Szymborska](http://en.wikipedia.org/wiki/Wis%C5%82awa_Szymborska) said "All imperfection is easier to tolerate if served up in small doses." **[ Space Commander]** will remove nearly all formatting imperfections, but you may need to tolerate an occasional deviation from the expected result.
+* [Wislawa Szymborska](http://en.wikipedia.org/wiki/Wis%C5%82awa_Szymborska) said "All imperfection is easier to tolerate if served up in small doses." **[ Space Commander ]** will remove nearly all formatting imperfections, but you may need to tolerate an occasional deviation from the expected result.
 
