@@ -1,7 +1,8 @@
-[ Space Commander]
--------------
+# [ Space Commander]
 
 **[ Space Commander]** provides tools which enable a team of iOS developers to commit Objective-C code to a git repository using a unified style format, without requiring any manual fixup.
+
+![Corgi image](banner.jpg)
 
 You can use it to:
 
