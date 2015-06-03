@@ -1,0 +1,10 @@
+[build "PR"]
+	template = Objective-C-Formatter-Build-Template
+	pull_request = true
+	disable_mailer = true
+
+[build "Master"]
+	template = Objective-C-Formatter-Build-Template
+  	branch = master
+	pull_request = false
+	disable_mailer = false
