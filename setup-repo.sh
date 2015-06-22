@@ -19,13 +19,13 @@ function ensure_pre_commit_file_exists() {
   fi 
 
   if [ -d ".git" ]; then
-    $(mkdir -p "~/.git/hooks");
+    $(mkdir -p ".git/hooks");
   elif [ -e ".git" ]; then
     # grab the git dir from our .git file, listed as 'gitdir: blah/blah/foo'
     git_dir=$(grep gitdir .git | cut -d ' ' -f 2)
     pre_commit_file="$git_dir/hooks/pre-commit"
   else
-    $(mkdir -p "~/.git/hooks");
+    $(mkdir -p ".git/hooks");
   fi
 
   $(touch $pre_commit_file)
