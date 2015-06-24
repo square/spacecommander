@@ -51,7 +51,7 @@ To modify the formatting output, edit the following:
 * `format-objc-file-dry-run.sh` and `format-objc-file.sh` for rules that are implemented in `custom/`.
 * `Testing Support/` files to validate your changes.
 
-Add `#pragma Formatter Exempt` as the first line of the file if the formatter should ignore it.
+Add `#pragma Formatter Exempt` or `// MARK: Formatter Exempt` as the first line of the file if the formatter should ignore it.
 
 Installation for Pull Request Validation
 -------------
@@ -86,6 +86,6 @@ Other Notes
 The formatter can't do everything. It may occasionally produce an undesirable result, in which case you can either:
 
 * Refactor code to produce a line that is simpler and less confusing to the formatter.
-* Add `#pragma Formatter Exempt` as the first line of the file, and it will not be formatted at all.
+* Add `#pragma Formatter Exempt` or `// MARK: Formatter Exempt` as the first line of the file, and it will not be formatted at all.
 * [Wislawa Szymborska](http://en.wikipedia.org/wiki/Wis%C5%82awa_Szymborska) said "All imperfection is easier to tolerate if served up in small doses." **[ Space Commander]** will remove nearly all formatting imperfections, but you may need to tolerate an occasional deviation from the expected result.
 
