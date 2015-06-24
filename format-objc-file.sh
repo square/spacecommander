@@ -12,9 +12,10 @@ if [ ! -e ".clang-format" ]; then
 	exit 1
 fi
 
-# "#pragma Formatter Exempt" means don't format this file
-line="$(head -1 "$1" | xargs)" # (read the first line and trim it)
-[ "$line" == "#pragma Formatter Exempt" ] && exit 0
+# "#pragma Formatter Exempt" or "// MARK: Formatter Exempt" means don't format this file.
+# Read the first line and trim it.
+line="$(head -1 "$1" | xargs)" 
+[ "$line" == "#pragma Formatter Exempt" -o "$line" == "// MARK: Formatter Exempt" ] && exit 0
 
 # Fix an edge case with array / dictionary literals that confuses clang-format
 python "$DIR"/custom/LiteralSymbolSpacer.py "$1"
