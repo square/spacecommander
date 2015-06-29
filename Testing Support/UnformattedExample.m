@@ -17,6 +17,16 @@ ThisIsAMacroThatShouldNotHaveASemicolonAppended()
   // do stuff
 }
 
+BOOL extraSemicolonsNotInsertedAfterCGStructInitializer()
+{
+    CAShapeLayer *contentViewVerticalDividerLayer = [TAFStyles lineShapeLayerFromPoint:CGPointMake(0.0f,
+                CGRectGetHeight(contentView.bounds) - hairline)
+        toPoint:CGPointMake(CGRectGetWidth(contentView.bounds),
+                CGRectGetHeight(contentView.bounds) - hairline)
+        withColor:[UIColor tef_tabletFilterHeaderDividerColor]
+            width:hairline];
+}
+
 #define RKTAddTestCaseCategoryInterface(klass, name) \
 @class klass; \
 @interface KIFTestCase (klass##_ConvenienceAdditions) \
@@ -111,5 +121,7 @@ BOOL CStyleMethod()
 {
   return false;
 }
+
+
 
 @end

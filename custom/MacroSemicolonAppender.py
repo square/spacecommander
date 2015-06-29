@@ -11,6 +11,7 @@ class MacroSemicolonAppender(AbstractCustomFormatter):
     def format_lines(self, lines):
         lines_to_write = []
         preceding_line_ends_with_backslash = False
+        preceding_line_ends_with_comma = False
         for line_number, line in enumerate(lines):
             # Criteria for a macro in need of semicolon:
             # - Starts with uppercase letter, ends with )
@@ -24,6 +25,8 @@ class MacroSemicolonAppender(AbstractCustomFormatter):
                     needs_semicolon = needs_semicolon and not lines[line_number + 1].lstrip().startswith(brace)
             # This line isn't part of a macro definition (we look at the previous line to see if it ended with a \)
             needs_semicolon = needs_semicolon and not preceding_line_ends_with_backslash
+            # If the prior line ends with a comma, we're part of a larger statement.
+            needs_semicolon = needs_semicolon and not preceding_line_ends_with_comma
 
             if needs_semicolon:
                 line = line.rstrip() + ";\n"
@@ -34,6 +37,10 @@ class MacroSemicolonAppender(AbstractCustomFormatter):
                 preceding_line_ends_with_backslash = True
             else:
                 preceding_line_ends_with_backslash = False
+            if stripped_line.endswith(","):
+                preceding_line_ends_with_comma = True
+            else:
+                preceding_line_ends_with_comma = False
 
         return "".join(lines_to_write)
 
