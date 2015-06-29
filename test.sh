@@ -21,3 +21,5 @@ if [ "$difference" -gt 0 ]; then
   exit $difference
 fi
 
+echo "Tests pass"
+
