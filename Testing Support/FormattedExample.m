@@ -12,6 +12,9 @@
 ThisIsAMacroThatIsMissingASemicolon();
 ThisIsAMacroThatIsMissingASemicolon();
 
+#if __has_include(<SafariServices/SafariServices.h>)
+#endif
+
 ThisIsAMacroThatShouldNotHaveASemicolonAppended()
 {
     // do stuff
