@@ -39,21 +39,30 @@ function ensure_hook_is_installed() {
   # check if this repo is referenced in the precommit hook already
   repo_path=$(git rev-parse --show-toplevel)
   if ! grep -q "$repo_path" "$pre_commit_file"; then
+    echo "#!/usr/bin/env bash" >> $pre_commit_file
     echo "current_repo_path=\$(git rev-parse --show-toplevel)" >> $pre_commit_file
     echo "repo_to_format=\"$repo_path\"" >> $pre_commit_file
-    echo 'if [ "$current_repo_path" == "$repo_to_format" ]'" && [ -e $DIR/format-objc-hook ]; then $DIR/format-objc-hook; fi" >> $pre_commit_file
+    echo 'if [ "$current_repo_path" == "$repo_to_format" ]'" && [ -e \"$DIR\"/format-objc-hook ]; then \"$DIR\"/format-objc-hook; fi" >> $pre_commit_file
   fi
 }
 
 function ensure_git_ignores_clang_format_file() {
+  # if .clang-format is already in the git tree then it doesn't need to be added to the ignore file
+  pushd "$DIR"
+  git ls-files .clang-format --error-unmatch > /dev/null
+  in_tree=$?
+  popd
   grep -q ".clang-format" ".gitignore"
-  if [ $? -gt 0 ]; then
+  if [ $? -gt 0 -a $in_tree -gt 0 ]; then
     echo ".clang-format" >> ".gitignore"
   fi
 }
 
 function symlink_clang_format() {
-  $(ln -sf "$DIR/.clang-format" ".clang-format")
+  # only symlink .clang-format if it doesn't exist already
+  if [ ! -e "$DIR/.clang-format" ]; then
+    $(ln -sf "$DIR/.clang-format" ".clang-format")
+  fi
 }
 
 
