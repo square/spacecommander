@@ -47,22 +47,14 @@ function ensure_hook_is_installed() {
 }
 
 function ensure_git_ignores_clang_format_file() {
-  # if .clang-format is already in the git tree then it doesn't need to be added to the ignore file
-  pushd "$DIR"
-  git ls-files .clang-format --error-unmatch > /dev/null
-  in_tree=$?
-  popd
   grep -q ".clang-format" ".gitignore"
-  if [ $? -gt 0 -a $in_tree -gt 0 ]; then
+  if [ $? -gt 0 ]; then
     echo ".clang-format" >> ".gitignore"
   fi
 }
 
 function symlink_clang_format() {
-  # only symlink .clang-format if it doesn't exist already
-  if [ ! -e "$DIR/.clang-format" ]; then
-    $(ln -sf "$DIR/.clang-format" ".clang-format")
-  fi
+  $(ln -sf "$DIR/.clang-format" ".clang-format")
 }
 
 
