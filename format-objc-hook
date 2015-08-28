@@ -23,7 +23,7 @@ function format_objc() {
 	
     if [ $difference -gt 0 ]; then
     	# This is what the dev can run to fixup an individual file
-    	echo "$DIR/format-objc-file.sh '$file' && git add '$file';"
+    	echo "\"$DIR\"/format-objc-file.sh '$file' && git add '$file';"
     	success=1
     fi
   done
@@ -31,6 +31,6 @@ function format_objc() {
 }
 
 success=0
-format_objc || (echo -e "🔴  There were formatting issues with this commit, fix by running the👆 above👆 commands. \n\tYou can also run: $DIR/format-objc-files.sh\n💔  Commit anyway and skip this check by running git commit --no-verify" && success=1)
+format_objc || (echo -e "🔴  There were formatting issues with this commit, fix by running the👆 above👆 commands. \n\tYou can also run: \"$DIR\"/format-objc-files.sh\n💔  Commit anyway and skip this check by running git commit --no-verify" && success=1)
 
 exit $success
