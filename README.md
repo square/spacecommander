@@ -43,7 +43,7 @@ This way, we can check the formatting as part of the build process, and fail the
 Configuration
 -------------
 
-To format files within a single directory only (just one of these is supported at this time), specify the name of this directory in a file named .formatting-directory. Otherwise, all Objective-C files tracked in the repo will be checked.
+To format files only within selected directories, specify the name each directory in a file named `.formatting-directory`, separated by newlines (and without whitespace escaped). Otherwise, all Objective-C files tracked in the repo will be checked.
 
 To modify the formatting output, edit the following:
 
