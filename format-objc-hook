@@ -19,18 +19,24 @@ objc_files=$(objc_files_to_format "$1")
 function format_objc() {
   success=0
   for file in $objc_files; do
-	difference=$("$DIR"/format-objc-file-dry-run.sh "$file" | diff "$file" - | wc -l)
+    difference=$("$DIR"/format-objc-file-dry-run.sh "$file" | diff "$file" - | wc -l)
 	
     if [ $difference -gt 0 ]; then
+        if [ $success -eq 0 ]; then
+            echo -e "🚸 Format and stage individual files:"
+        fi
     	# This is what the dev can run to fixup an individual file
     	echo "\"$DIR\"/format-objc-file.sh '$file' && git add '$file';"
     	success=1
     fi
   done
+  if [ $success -gt 0 ]; then
+      echo -e "\n🚀  Format and stage all affected files:\n\t \"$DIR\"/format-objc-files.sh -s"
+  fi
   return $success 
 }
 
 success=0
-format_objc || (echo -e "🔴  There were formatting issues with this commit, fix by running the👆 above👆 commands. \n\tYou can also run: \"$DIR\"/format-objc-files.sh\n💔  Commit anyway and skip this check by running git commit --no-verify" && success=1)
+format_objc || (echo -e "\n🔴  There were formatting issues with this commit, run the👆 above👆 command to fix.\n💔  Commit anyway and skip this check by running git commit --no-verify" && success=1)
 
 exit $success
