@@ -9,7 +9,7 @@ IFS=$'\n'
 # If .formatting-directory doesn't exist then all files in the repository are checked.
 function directories_to_check() {
 	locations_to_diff=''
-	[ -e ".formatting-directory" ] && locations_to_diff=$( cat .formatting-directory | sed 's/ /\\ /g' );
+	[ -e ".formatting-directory" ] && locations_to_diff=$( cat .formatting-directory );
 }
 
 # Returns a list of Objective-C files to format.
