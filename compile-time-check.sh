@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-# ~/.git_template.local/hooks/pre-commit
-# format-objc-hook
-# pre-commit hook to check if any unformatted Objective-C files would be committed. Fails the check if so, and provides instructions.
-#
+# compile-time-check.sh
+# Use this script to fail the build at compile time if *any* formatting issues exist (git status doesn't matter). 
 # Copyright 2015 Square, Inc
 
 IFS=$'\n'
@@ -10,10 +8,9 @@ export CDPATH=""
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 source "$DIR"/lib/common-lib.sh
 
-# Don't do anything unless a .clang-format file exists
-[ -e ".clang-format" ] || exit 0
+[ -e ".clang-format" ] || { echo -e "\n🔴  Expected .clang-format file. Add one or run \"$DIR\"/setup-repo.sh\n from top-level repo." && exit 1; }
 
-objc_files=$(objc_files_to_format "$1")
+objc_files=$(all_valid_objc_files_in_repo)
 [ -z "$objc_files" ] && exit 0
 
 function format_objc() {
@@ -31,11 +28,11 @@ function format_objc() {
     fi
   done
   if [ $success -gt 0 ]; then
-      echo -e "\n🚀  Format and stage all affected files:\n\t \"$DIR\"/format-objc-files.sh -s"
+      echo -e "\n🚀  Format all files:\n\t \"$DIR\"/format-objc-files-in-repo.sh"
   fi
   return $success 
 }
 
-format_objc || { echo -e "\n🔴  There were formatting issues with this commit, run the👆 above👆 command to fix.\n💔  Commit anyway and skip this check by running git commit --no-verify" && exit 1; }
+format_objc || { echo -e "\n🔴  There were formatting issues with this commit, run the👆 above👆 command to fix.\n" && exit 1; }
 
 exit 0
