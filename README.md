@@ -89,3 +89,9 @@ The formatter can't do everything. It may occasionally produce an undesirable re
 * Add `#pragma Formatter Exempt` or `// MARK: Formatter Exempt` as the first line of the file, and it will not be formatted at all.
 * [Wislawa Szymborska](http://en.wikipedia.org/wiki/Wis%C5%82awa_Szymborska) said "All imperfection is easier to tolerate if served up in small doses." **[ Space Commander]** will remove nearly all formatting imperfections, but you may need to tolerate an occasional deviation from the expected result.
 
+Contributing
+-------------
+
+We’re glad you’re interested in **[ Space Commander]**, and we’d love to see where you take it. Please read our [contributing guidelines](Contributing.md) prior to submitting a Pull Request.
+
+Thanks, and happy formatting!
