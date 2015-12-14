@@ -14,7 +14,7 @@ If you want to add a feature, please file an [Issue](issues) first. An Issue giv
 
 ###Backwards compatibility
 
-Respect the minimum deployment target. If you are adding code that uses new APIs, make sure to prevent older clients from crashing or misbehaving. Our CI runs against our minimum deployment targets, so you will not get a green build unless your code is backwards compatible. 
+Existing installs of Space Commander should continue to work after upgrading to a version that includes your changes. Some changes may need to include a migration plan.
 
 ###Forwards compatibility
 
