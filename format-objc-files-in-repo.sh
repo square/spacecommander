@@ -15,14 +15,7 @@ source "$DIR"/lib/common-lib.sh
 objc_files=$(all_valid_objc_files_in_repo)
 [ -z "$objc_files" ] && exit 0
 
-function format_objc() {
-  for file in $objc_files; do
-    $("$DIR"/format-objc-file.sh "$file")
-  done
-  return 0
-}
-
-format_objc || fail=yes
+echo -e "$objc_files" | xargs -I CMD -P 4 "$DIR"/format-objc-file.sh CMD || fail=yes
 
 [ -z "$fail" ] || exit 1
 
