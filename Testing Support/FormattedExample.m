@@ -76,6 +76,15 @@ struct Update {
     NSArray *testLiteral = @[ cool ];
     NSDictionary *dictLiteral = @{ @"foo" : testLiteral };
     SQCheckCondition(NO, , @"Will the commas stay together?");
+
+    [deviceManager syncDatasByIndexes:indexes finish:^{
+	[self doSomething]; // not formatted
+    }];
+
+    [deviceManager syncDatasByIndexes:indexes
+                               finish:^{
+     [self doSomething]; // not formatted
+                               }];
 }
 
 - (BOOL)methodThatReturnsSomething
