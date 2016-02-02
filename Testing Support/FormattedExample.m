@@ -1,6 +1,6 @@
 // Copyright 2015 Square, Inc
-#import @"XYZGeometry.h"
 #import "Blah.h"
+#import @"XYZGeometry.h"
 #import <Great.h>
 
 
@@ -90,6 +90,16 @@ struct Update {
 
 - (id<ProtocolConformer>)spaceInTypeName;
 {
+    [_heartRateView showHRList:^{
+        [self performSegueWithIdentifier:@"ToHRList" sender:nil];
+    }];
+
+    [self.delegate capturePaymentForTransactionAutomaticCaptureController:self completionHandler:^(NSError *error) {
+        if (NO) {
+            // do nothing
+        } else {
+        }
+    }];
     return nil;
 }
 
@@ -97,15 +107,14 @@ struct Update {
 {
     // The formatters can't distinguish between inline operators and casts, unfortunately.
     // We're either going to add or remove a space after the parens below.
-    [headers setObject:(squareInstallationIdentifier ?: @"Unavailable")forKey:@"X-Device-Installation-ID"];
-    [headers setObject:(@"Unavailable" + @"hello")forKey:nil];
+    [headers setObject:(squareInstallationIdentifier ?: @"Unavailable") forKey:@"X-Device-Installation-ID"];
+    [headers setObject:(@"Unavailable" + @"hello") forKey:nil];
     [self methodWithParams:(id)nil another:NO];
     // This is fine because it's a macro and not an operator.
     [self methodWithParams:NSStringFromClass(self.class) another:NO];
 }
 
 - (void)shortMethod {}
-
 - (void)dictsInArray
 {
     NSArray *dictionaries = @[

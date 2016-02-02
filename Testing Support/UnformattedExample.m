@@ -91,6 +91,16 @@ struct Update {
 
 - (id <ProtocolConformer>)spaceInTypeName;
 {
+    [_heartRateView showHRList:^{
+[self performSegueWithIdentifier:@"ToHRList" sender:nil];
+    }];
+
+    [self.delegate capturePaymentForTransactionAutomaticCaptureController:self completionHandler:^(NSError *error) {
+    if (NO) {
+            // do nothing
+    } else {
+    }
+        }];
   return nil;
 }
 
