@@ -27,7 +27,7 @@ python "$DIR"/custom/MacroSemicolonAppender.py "$1"
 python "$DIR"/custom/DoubleNewlineInserter.py "$1"
 
 # Run clang-format
-"$DIR"/bin/clang-format-3.8 -i -style=file "$1" ;
+"$DIR"/bin/clang-format-3.8-custom -i -style=file "$1" ;
 # Fix an issue with clang-format inserting spaces in a preprocessor macro.
 python "$DIR"/custom/HasIncludeSpaceRemover.py "$1"
 # Add a newline at the end of the file

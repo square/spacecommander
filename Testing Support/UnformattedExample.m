@@ -104,6 +104,29 @@ struct Update {
   return nil;
 }
 
+-(void)blockFormat;
+{
+    [self block:^(void) {
+ doStuff();
+    } completionHandler:^(void) {
+         doStuff();
+
+      [self block:^(void) {
+        doStuff();
+      } completionHandler:^(void) {
+ doStuff();
+      }];
+    }];
+
+    [self setupTextFieldSignals:@[
+      self.documentWidthField,
+      self.documentHeightField,
+    ] solver:^(NSTextField *textField) {
+      return [self.representedObject solveEquationForTextField:textField];
+    }];
+
+}
+
 - (void)paranthesisInMessage
 {
   // The formatters can't distinguish between inline operators and casts, unfortunately.
