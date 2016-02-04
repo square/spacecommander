@@ -1,0 +1,3 @@
+`clang-format-3.8-custom` built from:
+ - LLVM source: https://llvm.org/svn/llvm-project/llvm/trunk@256072
+ - clang source: https://github.com/ksuther/clang/commit/35f09a1845bd3d7514b27307b5e192ed178ceeca

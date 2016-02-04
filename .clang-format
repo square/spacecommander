@@ -1,4 +1,8 @@
 ---
+# Custom options in the special build of clang-format (these are not standard options)
+IndentNestedBlocks: false
+AllowNewlineBeforeBlockParameter: false
+
 Language:        Cpp
 # BasedOnStyle:  Google
 AccessModifierOffset: -1
@@ -60,7 +64,7 @@ BraceWrapping:
     AfterEnum: false
     AfterFunction: true
     AfterNamespace: true
-    AfterObjCDeclaration: false
+    AfterObjCDeclaration: true
     AfterStruct: false
     AfterUnion: false
     BeforeCatch: false
