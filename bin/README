@@ -1,3 +1,4 @@
 `clang-format-3.8-custom` built from:
  - LLVM source: https://llvm.org/svn/llvm-project/llvm/trunk@256072
  - clang source: https://github.com/ksuther/clang/commit/35f09a1845bd3d7514b27307b5e192ed178ceeca
+ - options used: cmake -DCMAKE_BUILD_TYPE=Release -DLLVM_TARGETS_TO_BUILD="X86" -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_INCLUDE_TESTS=OFF
