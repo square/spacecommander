@@ -7,6 +7,7 @@ Language:        Cpp
 # BasedOnStyle:  Google
 AccessModifierOffset: -1
 ConstructorInitializerIndentWidth: 4
+SortIncludes: false
 
 AlignAfterOpenBracket: true
 AlignEscapedNewlinesLeft: true
