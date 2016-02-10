@@ -60,7 +60,7 @@ Installation for Pull Request Validation
 
 If you want style checking as a mandatory step to get a mergeable PR, do the following:
 
-* Ensure that this repository is located at `Scripts/spacecommander`, or add it to `.dependencies` at `../spacecommander`
+* Add this repository as a [cocoapod](https://guides.cocoapods.org/using/getting-started.html), or add it as a submodule in a `Scripts/` directory.
 * Ensure that your repository has setup `.sqiosbuild.json` and `.stashkins` files at the top level (more info on the Square wiki page titled *All About Mobuild*).
 * The build machines are setup to check for the above conditions, and if they're met, automatically run `format-objc-mobuild`.
 * Open a PR with a modified Objective-C file to verify these checks are running.

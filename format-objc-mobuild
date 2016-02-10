@@ -11,7 +11,7 @@ export CDPATH=""
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 # The (assumed) relative path to the scripts from the repo.
 # It would be better to search for this location, but it's made more difficult since this could be located as a sibling dependency for some repos.
-RELATIVE_SCRIPTS_DIR="Scripts/spacecommander"
+RELATIVE_SCRIPTS_DIR="Pods/spacecommander"
 
 source "$DIR"/lib/common-lib.sh
 
