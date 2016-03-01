@@ -19,6 +19,7 @@ python "$DIR"/custom/InlineConstructorOnSingleLine.py | \
 python "$DIR"/custom/MacroSemicolonAppender.py | \
 python "$DIR"/custom/DoubleNewlineInserter.py | \
 "$DIR"/bin/clang-format-3.8-custom -style=file | \
+python "$DIR"/custom/GenericCategoryLinebreakIndentation.py | \
 python "$DIR"/custom/HasIncludeSpaceRemover.py | \
 python "$DIR"/custom/NewLineAtEndOfFileInserter.py
 

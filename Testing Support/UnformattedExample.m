@@ -30,6 +30,22 @@ BOOL extraSemicolonsNotInsertedAfterCGStructInitializer()
             width:hairline];
 }
 
+// Unfortunately, the first @property's spacing is ignored because clang-format is confused by the generic category interface.
+@interface NSDictionary<__covariant KeyType, __covariant ObjectType>(INSScrub)
+
+@property(nonatomic, assign, getter = isWackSpacingGetter, readonly) BOOL wackSpacing;
+@property (readonly, copy) NSDictionary<KeyType, ObjectType> *ins_scrubbed;
+@property(nonatomic, assign, getter = isWackSpacingGetter, readonly) BOOL wackSpacing;
+
+@end
+
+ @interface NSDictionary<__covariant KeyType, __covariant ObjectType> (INSScrub)
+
+@property (readonly, copy) NSDictionary<KeyType, ObjectType> *ins_scrubbedA;
+@property(readonly, copy) NSDictionary<KeyType, ObjectType> *ins_scrubbedB;
+
+@end
+
 #define RKTAddTestCaseCategoryInterface(klass, name) \
 @class klass; \
 @interface KIFTestCase (klass##_ConvenienceAdditions) \
