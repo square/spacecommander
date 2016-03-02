@@ -175,5 +175,33 @@ BOOL CStyleMethod()
     return false;
 }
 
+INSAFSuccessBlock INSAPIClientModelSuccessHandler(Class mantleClass, NSString *__nullable keyPath, INSHTTPSuccess __nullable success, INSHTTPFailure __nullable failure)
+{
+    return INSAPIClientModelSuccessChain(mantleClass, keyPath, ^(__kindof INSModel *model, id _) {
+        if (success) {
+            success(model);
+        }
+    }, failure);
+}
+
+- (void)fetchWithSuccess:(nullable dispatch_block_t)success failure:(nullable INSHTTPFailure)failure
+{
+    [self GET:@"data" parameters:nil success:INSAPIClientModelArraySuccessChain([INSModel class], nil, ^(INSModel *model, id responseObject) {
+        if (success) {
+            success();
+        }
+    }, failure) failure:failure];
+}
+
+- (void)postWithSuccess:(nullable INSHTTPSuccess)success failure:(nullable INSHTTPFailure)failure
+{
+    id imageData = nil;
+    [self POST:@"endpoint" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        if (imageData) {
+            [formData appendPartWithFileData:imageData name:@"image" fileName:@"photo.jpg" mimeType:@"image/jpeg"];
+        }
+    } success:INSAPIClientEmptySuccessHandler(success) failure:failure];
+}
+
 
 @end

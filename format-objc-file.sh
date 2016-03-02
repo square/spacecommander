@@ -30,6 +30,8 @@ python "$DIR"/custom/DoubleNewlineInserter.py "$1"
 "$DIR"/bin/clang-format-3.8-custom -i -style=file "$1" ;
 # Fix an issue with clang-format getting confused by categories with generic expressions.
 python "$DIR"/custom/GenericCategoryLinebreakIndentation.py "$1"
+# Fix an issue with clang-format breaking up a lone parameter onto a newline after a block literal argument.
+python "$DIR"/custom/ParameterAfterBlockNewline.py "$1"
 # Fix an issue with clang-format inserting spaces in a preprocessor macro.
 python "$DIR"/custom/HasIncludeSpaceRemover.py "$1"
 # Add a newline at the end of the file
