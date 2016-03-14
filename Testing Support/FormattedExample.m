@@ -203,5 +203,19 @@ INSAFSuccessBlock INSAPIClientModelSuccessHandler(Class mantleClass, NSString *_
     } success:INSAPIClientEmptySuccessHandler(success) failure:failure];
 }
 
+// clang-format off
+- (void)callbackWithSuccess:(dispatch_block_t)success
+{
+    NSError *error = nil;
+    [self createModelWithMapping:@{
+        @"key": [NSArray ins_arrayWithCount:5 usingBlock:^__nullable id (NSUInteger idx) {
+            return nil;
+        }],
+    } error:&error];
+    if (success) {
+        success();
+    }
+}
+// clang-format on
 
 @end
