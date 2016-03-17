@@ -25,9 +25,14 @@ python "$DIR"/custom/InlineConstructorOnSingleLine.py "$1"
 python "$DIR"/custom/MacroSemicolonAppender.py "$1"
 # Add an extra newline before @implementation and @interface
 python "$DIR"/custom/DoubleNewlineInserter.py "$1"
+# Use a substitution to prevent clang-format from brace confusion with dictionary literals and blocks.
+python "$DIR"/custom/PreProcessDictionaryLiteralInBlock.py "$1"
 
 # Run clang-format
 "$DIR"/bin/clang-format-3.8-custom -i -style=file "$1" ;
+
+# Undo the substitution from PreProcessDictionaryLiteralInBlock.py
+python "$DIR"/custom/PostProcessDictionaryLiteralInBlock.py "$1"
 # Fix an issue with clang-format getting confused by categories with generic expressions.
 python "$DIR"/custom/GenericCategoryLinebreakIndentation.py "$1"
 # Fix an issue with clang-format breaking up a lone parameter onto a newline after a block literal argument.

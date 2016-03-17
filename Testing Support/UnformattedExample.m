@@ -205,7 +205,6 @@ INSAFSuccessBlock INSAPIClientModelSuccessHandler(Class mantleClass, NSString *_
     } success:INSAPIClientEmptySuccessHandler(success) failure:failure];
 }
 
-// clang-format off
 - (void)callbackWithSuccess:(dispatch_block_t)success
 {
     NSError *error = nil;
@@ -218,6 +217,5 @@ INSAFSuccessBlock INSAPIClientModelSuccessHandler(Class mantleClass, NSString *_
         success();
     }
 }
-// clang-format on
 
 @end
