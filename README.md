@@ -45,6 +45,8 @@ Configuration
 
 To format files only within selected directories, specify the name each directory in a file named `.formatting-directory`, separated by newlines (and without whitespace escaped). Otherwise, all Objective-C files tracked in the repo will be checked.
 
+To ignore files within directories, add the name of each directory on a new line to a file named `.formatting-directory-ignore`.
+
 To modify the formatting output, edit the following:
 
 * `.clang-format` for built in `clang-format` options.
