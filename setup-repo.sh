@@ -38,11 +38,16 @@ function ensure_pre_commit_file_is_executable() {
 function ensure_hook_is_installed() {
   # check if this repo is referenced in the precommit hook already
   repo_path=$(git rev-parse --show-toplevel)
-  if ! grep -q "$repo_path" "$pre_commit_file"; then
-    echo "#!/usr/bin/env bash" >> $pre_commit_file
+  if ! grep -q "SPACE COMMANDER START" "$pre_commit_file"; then
+    if [ `cat "$pre_commit_file" | wc -l` -eq 0 ]; then
+      echo "#!/usr/bin/env bash" >> $pre_commit_file
+    fi
+
+    echo "# SPACE COMMANDER START #" >> $pre_commit_file
     echo "current_repo_path=\$(git rev-parse --show-toplevel)" >> $pre_commit_file
     echo "repo_to_format=\"$repo_path\"" >> $pre_commit_file
     echo 'if [ "$current_repo_path" == "$repo_to_format" ]'" && [ -e \"$DIR\"/format-objc-hook ]; then \"$DIR\"/format-objc-hook; fi" >> $pre_commit_file
+    echo "# SPACE COMMANDER END #" >> $pre_commit_file
   fi
 }
 
