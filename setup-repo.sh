@@ -42,7 +42,7 @@ function ensure_hook_is_installed() {
     echo "#!/usr/bin/env bash" >> $pre_commit_file
     echo "current_repo_path=\$(git rev-parse --show-toplevel)" >> $pre_commit_file
     echo "repo_to_format=\"$repo_path\"" >> $pre_commit_file
-    echo 'if [ "$current_repo_path" == "$repo_to_format" ]'" && [ -e \"$DIR\"/format-objc-hook ]; then \"$DIR\"/format-objc-hook; fi" >> $pre_commit_file
+    echo 'if [ "$current_repo_path" == "$repo_to_format" ]'" && [ -e \"$DIR\"/format-objc-hook ]; then \"$DIR\"/format-objc-hook || exit 1; fi" >> $pre_commit_file
   fi
 }
 
