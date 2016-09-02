@@ -15,6 +15,15 @@ ThisIsAMacroThatIsMissingASemicolon()
 #if __has_include(<SafariServices/SafariServices.h>)
 #endif
 
+/*!
+    @interface  IOHIDDeviceTransactionInterface
+    @abstract   The object you use to access a HID transaction from user space, returned by version 1.5 of the IOHIDFamily.
+    @discussion The functions listed here will work with any version of the IOHIDDeviceTransactionInterface. This functionality
+                is useful when either setting or getting the values for multiple parsed elements.
+*/
+typedef struct IOHIDDeviceTransactionInterface {
+}
+
 ThisIsAMacroThatShouldNotHaveASemicolonAppended()
 {
   // do stuff

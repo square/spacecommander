@@ -18,9 +18,14 @@ class DoubleNewlineInserter(AbstractCustomFormatter):
             if stripped_line.startswith("#") or stripped_line.endswith("\\"):
                 needs_double_newline_added = False
             elif stripped_line.startswith("@interface") or stripped_line.startswith("@implementation"):
-                needs_double_newline_added = not comment_section
+                needs_double_newline_added = not (comment_section or in_multiline_comment)
 
-            if stripped_line.startswith("//") or stripped_line.strip().endswith("*/"):
+            if stripped_line.startswith("/*"):
+                in_multiline_comment = True
+            if stripped_line.endswith("*/"):
+                in_multiline_comment = False
+            
+            if stripped_line.startswith("//") or stripped_line.endswith("*/"):
                 comment_section = True
             else:
                 comment_section = False
