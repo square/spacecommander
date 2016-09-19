@@ -12,6 +12,7 @@ class DoubleNewlineInserter(AbstractCustomFormatter):
         lines_to_write = []
         needs_double_newline_added = False
         comment_section = False
+        in_multiline_comment = False
         for line in lines:
             stripped_line = line.strip()
             # Leave macros alone
