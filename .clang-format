@@ -1,13 +1,13 @@
 ---
 # Custom options in the special build of clang-format (these are not standard options)
-IndentNestedBlocks: false
+IndentNestedBlocks: true
 AllowNewlineBeforeBlockParameter: false
 
 Language:        Cpp
 # BasedOnStyle:  Google
 AccessModifierOffset: -1
 ConstructorInitializerIndentWidth: 4
-SortIncludes: false
+SortIncludes: true
 
 AlignAfterOpenBracket: true
 AlignEscapedNewlinesLeft: true
@@ -17,10 +17,9 @@ AlignTrailingComments: true
 AllowAllParametersOfDeclarationOnNextLine: false
 AllowShortBlocksOnASingleLine: false
 AllowShortCaseLabelsOnASingleLine: false
-AllowShortFunctionsOnASingleLine: true
-AllowShortIfStatementsOnASingleLine: true
-AllowShortFunctionsOnASingleLine: All
-AllowShortLoopsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
 
 AlwaysBreakAfterDefinitionReturnType: false
 AlwaysBreakTemplateDeclarations: false
@@ -32,17 +31,17 @@ BreakConstructorInitializersBeforeComma: false
 
 BinPackArguments: true
 BinPackParameters: true
-ColumnLimit: 0
+ColumnLimit: 120
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
 DerivePointerAlignment: false
 ExperimentalAutoDetectBinPacking: false
 IndentCaseLabels: true
 IndentWrappedFunctionNames: false
 IndentFunctionDeclarationAfterType: false
-MaxEmptyLinesToKeep: 2
+MaxEmptyLinesToKeep: 1
 KeepEmptyLinesAtTheStartOfBlocks: false
 NamespaceIndentation: Inner
-ObjCBlockIndentWidth: 4
+ObjCBlockIndentWidth: 2
 ObjCSpaceAfterProperty: true
 ObjCSpaceBeforeProtocolList: true
 PenaltyBreakBeforeFirstCallParameter: 10000
@@ -55,7 +54,7 @@ PointerAlignment: Right
 SpacesBeforeTrailingComments: 1
 Cpp11BracedListStyle: true
 Standard:        Auto
-IndentWidth:     4
+IndentWidth:     2
 TabWidth:        8
 UseTab:          Never
 BreakBeforeBraces: Custom
@@ -63,9 +62,9 @@ BraceWrapping:
     AfterClass: true
     AfterControlStatement: false
     AfterEnum: false
-    AfterFunction: true
+    AfterFunction: false
     AfterNamespace: true
-    AfterObjCDeclaration: true
+    AfterObjCDeclaration: false
     AfterStruct: false
     AfterUnion: false
     BeforeCatch: false
@@ -78,13 +77,12 @@ SpacesInAngles:  false
 SpaceInEmptyParentheses: false
 SpacesInCStyleCastParentheses: false
 SpaceAfterCStyleCast: false
-SpacesInContainerLiterals: true
+SpacesInContainerLiterals: false
 SpaceBeforeAssignmentOperators: true
 
-ContinuationIndentWidth: 4
+ContinuationIndentWidth: 2
 CommentPragmas:  '^ IWYU pragma:'
 ForEachMacros:   [ foreach, Q_FOREACH, BOOST_FOREACH ]
 SpaceBeforeParens: ControlStatements
 DisableFormat:   false
 ...
-
