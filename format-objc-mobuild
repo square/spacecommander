@@ -11,7 +11,7 @@ export CDPATH=""
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 # The (assumed) relative path to the scripts from the repo.
 # It would be better to search for this location, but it's made more difficult since this could be located as a sibling dependency for some repos.
-RELATIVE_SCRIPTS_DIR="Pods/spacecommander"
+RELATIVE_SCRIPTS_DIR="Pods/SpaceCommander"
 
 source "$DIR"/lib/common-lib.sh
 
@@ -33,7 +33,7 @@ function format_objc() {
 }
 
 success=0
-echo -e "\n#### Checking Objective-C Code Formatting ####\n"
+echo -e "\n#### Checking Objective-C Code Formatting  ####\n"
 format_objc || (echo -e "There were formatting issues with this commit, fix by running the above commands." && success=1)
 
 if [ $success -eq 0 ]; then
@@ -41,7 +41,7 @@ if [ $success -eq 0 ]; then
 else
 	echo -e "\nOr, fixup files and stage them by running:\n\t$RELATIVE_SCRIPTS_DIR/format-objc-files.sh -s $1"
 	echo -e "\t(make sure you've installed the formatting checks first: $RELATIVE_SCRIPTS_DIR/setup-repo.sh )"
-	echo -e "\n#### Objective-C Code Formatting: FAILED ####\n"
+	echo -e "\n#### Objective-C Code Formatting: FAILED   ####\n"
 fi
 
 exit $success
