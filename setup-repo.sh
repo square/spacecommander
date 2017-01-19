@@ -24,6 +24,10 @@ function ensure_pre_commit_file_exists() {
     # grab the git dir from our .git file, listed as 'gitdir: blah/blah/foo'
     git_dir=$(grep gitdir .git | cut -d ' ' -f 2)
     pre_commit_file="$git_dir/hooks/pre-commit"
+
+    # Even if our git dir is in an unusual place, we still need to create the hook directory
+    # if it does not already exist.
+    $(mkdir -p "$git_dir/hooks");
   else
     $(mkdir -p ".git/hooks");
   fi
