@@ -19,6 +19,8 @@ Installation Locally
 
 To add formatting pre-commit checks to your repo, from the target repo, run `path/to/spacecommander/setup-repo.sh`.
 
+To fail Builds with incorrect formatting, add a `Run Script` phase in the `Build Phases` tab of your Xcode project's target. The contents of this `Run Script` phase are simply: `path/to/spacecommander/compile-time-check.sh`. Note: this could have a noticeable effect on build times (depending on how many Objective-C files are in the repo).
+
 Usage
 -------------
 
