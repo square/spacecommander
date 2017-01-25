@@ -17,7 +17,6 @@ cat "$1" | \
 python "$DIR"/custom/LiteralSymbolSpacer.py | \
 python "$DIR"/custom/InlineConstructorOnSingleLine.py | \
 python "$DIR"/custom/MacroSemicolonAppender.py | \
-python "$DIR"/custom/DoubleNewlineInserter.py | \
 "$DIR"/bin/clang-format-3.8-custom -style=file | \
 python "$DIR"/custom/GenericCategoryLinebreakIndentation.py | \
 python "$DIR"/custom/ParameterAfterBlockNewline.py | \
