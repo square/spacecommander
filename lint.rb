@@ -1,7 +1,10 @@
 #!/usr/bin/env ruby
 
 def check_oclint
-	changed_file_string = ARGV.join("\n")
+	workspace = ARGV[0]
+	scheme = ARGV[1]
+	changed_files_args = ARGV.drop(2)
+	changed_file_string = changed_files_args.join("\n")
 
 	puts "\n###############################################\n"
 	puts "\n#### OCLint                                ####\n"
@@ -10,9 +13,7 @@ def check_oclint
 	puts "\nChecking:\n"
 	puts "\n#{changed_file_string}\n"
 	changed_files = changed_file_string.split("\n")
-	workspace = "LevelUpUISDK.xcworkspace"
-	scheme = "UI Tests"
-
+	
 	file_filter_arguments = []
 	changed_files.each do |changed_file_string|
 		file_filter_arguments.push("-i #{changed_file_string}")
