@@ -24,7 +24,7 @@ Usage
 
 After running `setup-repo.sh`, formatting checks will run automatically before every commit.
 
-To format an individual file and modify it in place, run `format-objc-file.sh <file>`. To format it without modification, run `format-objc-file-dry-run.sh <file>`
+To format an individual file and modify it in place, run `format-objc-file.sh <file>`. To format it without modification, run `format-objc-file.sh <file> -d`
 
 To format **all** of the Objective-C files in your repository in-place, run `format-objc-files-in-repo.sh`.
 
@@ -50,7 +50,7 @@ To ignore files within directories, add the name of each directory on a new line
 To modify the formatting output, edit the following:
 
 * `.clang-format` for built in `clang-format` options.
-* `format-objc-file-dry-run.sh` and `format-objc-file.sh` for rules that are implemented in `custom/`.
+* `format-objc-file.sh` for rules that are implemented in `custom/`.
 * `Testing Support/` files to validate your changes.
 
 Add `#pragma Formatter Exempt` or `// MARK: Formatter Exempt` as the first line of the file if the formatter should ignore it.
@@ -80,7 +80,7 @@ Then, update `FormattedExample.m` (in the same place) with the expected result, 
 Custom Formatters
 -------------
 
-`clang-format` is fantastic and we love it, but it has some limitations. We've added our own ad-hoc formatting capabilities through scripts which live in `custom/`. If you add a custom file formatting script to `custom/`, invoke it in `format-objc-file.sh` and `format-objc-file-dry-run.sh` and add examples of input / output to files in `Testing Support/`.
+`clang-format` is fantastic and we love it, but it has some limitations. We've added our own ad-hoc formatting capabilities through scripts which live in `custom/`. If you add a custom file formatting script to `custom/`, invoke it in `format-objc-file.sh` and add examples of input / output to files in `Testing Support/`.
 
 Undesired Result?
 -------------

@@ -22,7 +22,7 @@ objc_files=$(objc_files_to_format "$1")
 function format_objc() {
   success=0
   for file in $objc_files; do
-	difference=$("$DIR"/format-objc-file-dry-run.sh "$file" | diff "$file" - | wc -l)
+	difference=$("$DIR"/format-objc-file.sh "$file" -d | diff "$file" - | wc -l)
 	
     if [ $difference -gt 0 ]; then
     	echo "$RELATIVE_SCRIPTS_DIR/format-objc-file.sh '$file' && git add '$file';"
