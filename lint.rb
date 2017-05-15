@@ -30,7 +30,7 @@ end
 def oclint_analyze(workspace, scheme, file_filter_argument)
 	puts "\nRunning OCLint Analysis. This may take a while...\n"
 	system_raise_failure("export LC_ALL=en_US.UTF-8 && xcodebuild CODE_SIGN_IDENTITY=\"\" CODE_SIGNING_REQUIRED=NO" +
-		" -workspace \"#{workspace}\" -scheme \"#{scheme}\" -configuration 'Debug' -sdk iphoneos clean build -dry-run" + 
+		" -workspace \"#{workspace}\" -scheme \"#{scheme}\" -configuration 'Debug' -sdk iphoneos clean build" + 
 		" | xcpretty -t --report json-compilation-database --output compile_commands.json")
 
 	system_raise_failure("oclint-json-compilation-database #{file_filter_argument} --" + 
