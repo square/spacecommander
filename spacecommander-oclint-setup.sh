@@ -1,11 +1,9 @@
 echo ''
 echo '## Setting Up OCLint ##'
 echo '#######################'
-brew tap oclint/formulae > /dev/null 2>&1
+brew uninstall --force oclint > /dev/null 2>&1
 brew install oclint > /dev/null 2>&1
-brew link oclint > /dev/null 2>&1
 oclint --version
-
 
 if [[ (-z $SKIP_SPACECOMMANDER) || "$SKIP_SPACECOMMANDER" != "YES" ]]; then
 	echo ''
