@@ -1,6 +1,7 @@
 echo ''
 echo '## Setting Up OCLint ##'
 echo '#######################'
+brew tap oclint/formulae
 brew uninstall --force oclint #> /dev/null 2>&1
 brew install oclint #> /dev/null 2>&1
 oclint --version
