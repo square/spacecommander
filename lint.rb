@@ -16,7 +16,7 @@ def check_oclint
 	
 	file_filter_arguments = []
 	changed_files.each do |changed_file_string|
-		file_filter_arguments.push("-i #{changed_file_string}")
+		file_filter_arguments.push(changed_file_string)
 	end
 
 	if (!file_filter_arguments.empty?)
@@ -33,8 +33,7 @@ def oclint_analyze(workspace, scheme, file_filter_argument)
 		" -workspace \"#{workspace}\" -scheme \"#{scheme}\" -configuration 'Debug' -sdk iphoneos clean build" + 
 		" | xcpretty -t --report json-compilation-database --output compile_commands.json")
 
-	system_raise_failure("oclint-json-compilation-database #{file_filter_argument} --" + 
-		" -list-enabled-rules -report-type=text")
+	system_raise_failure("oclint -list-enabled-rules -report-type=text #{file_filter_argument}")
 end
 
 def check_space_commander
