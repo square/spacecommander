@@ -39,7 +39,13 @@ function format_swift() {
 		local filename="${REPO_PATH}/$file"
 
 		if [[ "${filename##*.}" == "swift" ]]; then
-			RESULT=$($SWIFTLINT lint --quiet --path $filename)
+			RESULT=""
+			if [[ "$filename" == *"/UnitTests/"* ]]; then
+				RESULT=$($SWIFTLINT lint --quiet --path $filename --config .swiftlint-unit-tests.yml)
+			else 
+				RESULT=$($SWIFTLINT lint --quiet --path $filename --config .swiftlint.yml)
+			fi
+			
 			if [ "$RESULT" == '' ]; then
 				printf "$filename passed linting\n"
 			else 
