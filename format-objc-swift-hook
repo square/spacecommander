@@ -1,0 +1,106 @@
+#!/bin/bash
+
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+SC_DIR="/Pods/SpaceCommander"
+SWIFT_LINT_DIR="/Pods/SwiftLint/swiftlint"
+
+SWIFTLINT="${DIR/$SC_DIR/$SWIFT_LINT_DIR}"
+REPO_PATH="${DIR%$SC_DIR}"
+
+IFS=$'\n'
+export CDPATH=""
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+source "$DIR"/lib/common-lib.sh
+
+objc_files=$(objc_files_to_format $(git rev-parse origin/master))
+
+SWIFT_LINT_PASSED="true"
+OBJC_LINT_PASSED="true"
+success=0
+
+#Final function call to print out last comment
+function complete_linting() {
+	if [ "$SWIFT_LINT_PASSED" == "true" ] && [ "$OBJC_LINT_PASSED" == "true" ] ; then
+		printf "✅  \e[32mSwiftLint & SpaceCommander finished. All files passed!\e[39m 👍\n"
+	elif [ "$OBJC_LINT_PASSED" == "true" ]; then
+		printf "\nCOMMIT ABORTED. Please fix them before commiting, or try the autocorrect script by running:\n \n$DIR/format-swift-files.sh && git add .\n\n"
+		printf  "🙅‍  There were Swift formatting issues with this commit, run the👆 above👆 command to fix.💔 Commit anyway and skip this check by running git commit --no-verify\n"
+	elif [ "$SWIFT_LINT_PASSED" == "true" ]; then
+		printf  "\nCOMMIT ABORTED  Format and stage all affected files:\n \n\"$DIR\"/format-objc-files.sh -s\n\n"
+		printf  "🔴  There were Objective-C formatting issues with this commit, run the👆 above👆 command to fix.💔 Commit anyway and skip this check by running git commit --no-verify\n"
+	else 
+		printf "\nCOMMIT ABORTED. Please fix them before commiting, or try the autocorrect script by running:\n \n$DIR/format-swift-files.sh && \"$DIR\"/format-objc-files.sh -s && git add .\n\n"
+		printf  "🔴  🙅‍  There were Objective-C and Swift formatting issues with this commit, run the👆 above👆 command to fix.💔 Commit anyway and skip this check by running git commit --no-verify\n"
+	fi
+}
+
+function format_swift() { 
+	for file in $(git diff --cached --name-only $1 --diff-filter=ACMR); do 
+		local filename="${REPO_PATH}/$file"
+
+		if [[ "${filename##*.}" == "swift" ]]; then
+			RESULT=""
+			if [[ "$filename" == *"/UnitTests/"* ]]; then
+				RESULT=$($SWIFTLINT lint --quiet --path $filename --config .swiftlint-unit-tests.yml)
+			else 
+				RESULT=$($SWIFTLINT lint --quiet --path $filename --config .swiftlint.yml)
+			fi
+			
+			if [ "$RESULT" == '' ]; then
+				printf "$filename passed linting\n"
+			else 
+
+				if [ "$SWIFT_LINT_PASSED" == "true" ]; then
+					printf "\e[31m🚸  Swift formatting errors!\e[39m Please check below:\n"
+				fi
+
+				SWIFT_LINT_PASSED="false"
+				success=1
+				printf "$filename failed linting"
+
+				while read -r line; do
+					FILEPATH=$(echo $line | cut -d : -f 1)
+					L=$(echo $line | cut -d : -f 2)
+					C=$(echo $line | cut -d : -f 3)
+					TYPE=$(echo $line | cut -d : -f 4 | cut -c 2-)
+					MESSAGE=$(echo $line | cut -d : -f 5 | cut -c 2-)
+					DESCRIPTION=$(echo $line | cut -d : -f 6 | cut -c 2-)
+					if [ "$TYPE" == 'error' ]; then
+						printf "\n  \e[31m$TYPE\e[39m\n"
+					else
+						printf "\n  \e[33m$TYPE\e[39m\n"
+					fi
+					printf "    \e[90m$FILEPATH:$L:$C\e[39m\n"
+					printf "    $MESSAGE - $DESCRIPTION\n"
+				done <<< "$RESULT"
+			fi
+		fi
+	done
+	return $success
+}
+
+function format_objc() {
+  for file in $objc_files; do
+    difference=$("$DIR"/format-objc-file-dry-run.sh "$file" | diff "$file" - | wc -l)
+	
+    if [ $difference -gt 0 ]; then
+        if [ $success -eq 0 ]; then
+        	printf "\e[31m🚸  Objective-C formatting errors!\e[39m Format and stage individual files:\n"
+        fi
+    	# This is what the dev can run to fixup an individual file
+    	echo "\"$DIR\"/format-objc-file.sh '$file' && git add '$file';"
+    	success=1
+    fi
+  done
+  if [ $success -gt 0 ]; then
+    OBJC_LINT_PASSED="false"
+  fi
+}
+
+format_objc;
+if [ -e $SWIFTLINT ]; then 
+	format_swift;
+fi
+complete_linting;
+
+exit $success
