@@ -52,7 +52,14 @@ function ensure_git_ignores_clang_format_file() {
 }
 
 function symlink_clang_format() {
-  $(ln -sf "$DIR/.clang-format" ".clang-format")
+  # if you have coreutils/realpath installed, will try to use a relative path, otherwise use absolute path
+  if which realpath > /dev/null 2>&1; then
+    LINKDIR=$( realpath --relative-base=. $DIR )
+  else
+    LINKDIR=$DIR
+  fi
+
+  $(ln -sf "$LINKDIR/.clang-format" ".clang-format")
 }
 
 ensure_pre_commit_file_exists && ensure_pre_commit_file_is_executable && ensure_hook_is_installed && ensure_git_ignores_clang_format_file && symlink_clang_format
