@@ -11,8 +11,13 @@ def check_oclint
 	puts "\n###############################################\n"
 
 	puts "\nChecking:\n"
-	puts "\n#{changed_file_string}\n"
 	changed_files = changed_file_string.split("\n")
+	changed_files = changed_files.select do |element|
+		puts "#{element}"
+		return !element.end_with?("WL-Swift.h")
+	end
+	puts "\n#{changed_files.join("\n")}\n"
+
 	
 	file_filter_arguments = []
 	changed_files.each do |changed_file_string|
