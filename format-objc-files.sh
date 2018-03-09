@@ -23,7 +23,8 @@ else
 	echo "Not staging changes. Run '${BASH_SOURCE[0]} -s $1' to stage them."
 fi
 
-objc_files=$(objc_files_to_format "$optional_base_sha")
+objc_files=$(objc_files_to_format $(git rev-parse origin/master))
+
 [ -z "$objc_files" ] && exit 0
 
 function format_objc() {
