@@ -26,12 +26,12 @@ function format_objc() {
             echo -e "🚸 Format and stage individual files:"
         fi
     	# This is what the dev can run to fixup an individual file
-    	echo "\"$DIR\"/format-objc-file.sh '$file' && git add '$file';"
+    	echo "${DIR}/format-objc-file.sh '$file' && git add '$file';"
     	success=1
     fi
   done
   if [ $success -gt 0 ]; then
-      echo -e "\n🚀  Format and stage all affected files:\n\t \"$DIR\"/format-objc-files.sh -s"
+      echo -e "\n🚀  Format and stage all affected files:\n\t ${DIR}/format-objc-files.sh -s"
   fi
   return $success 
 }
