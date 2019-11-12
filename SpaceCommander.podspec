@@ -1,7 +1,7 @@
 # coding: utf-8
 Pod::Spec.new do |s|
   s.name         = "SpaceCommander"
-  s.version      = "1.1.10"
+  s.version      = "1.1.11"
   s.summary      = "[ SpaceCommander] provides tools which enable you to commit Objective-C code to a git repository using a unified style format."
   s.homepage     = "https://github.com/square/spacecommander"
   s.license      = { :type => 'Apache License, Version 2.0', :file => 'LICENSE' }
