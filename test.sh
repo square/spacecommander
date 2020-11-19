@@ -3,33 +3,37 @@
 # Checks that these scripts convert the unformatted file to the expected formatted result.
 # Copyright 2015 Square, Inc
 
-# Test that the in-place behavior does not differ from stdout
-cp Testing\ Support/UnformattedExample.m Testing\ Support/FormattedInPlace.m
-./format-objc-file.sh Testing\ Support/FormattedInPlace.m
-difference=$(./format-objc-file-dry-run.sh Testing\ Support/UnformattedExample.m | diff -q Testing\ Support/FormattedInPlace.m - | wc -l)
-if [ "$difference" -gt 0 ]; then
-    echo -e "Tests fail. Run\n\t diff <(./format-objc-file-dry-run.sh Testing\ Support/UnformattedExample.m) Testing\ Support/FormattedInPlace.m \nto see why."
-    echo "Then, remove the temporary file Testing\ Support/FormattedInPlace.m"
-    exit $difference
-fi
-rm Testing\ Support/FormattedInPlace.m
+set -o nounset
+set -o errexit
 
-difference=$(./format-objc-file-dry-run.sh Testing\ Support/UnformattedExample.m | diff -q Testing\ Support/FormattedExample.m - | wc -l)
-if [ "$difference" -gt 0 ]; then
-    echo -e "Tests fail. Run\n\t diff <(./format-objc-file-dry-run.sh Testing\ Support/UnformattedExample.m) Testing\ Support/FormattedExample.m \nto see why."
-    exit $difference
-fi
+function runTest() {
+    difference=$(./format-objc-file-dry-run.sh Testing\ Support/$1UnformattedExample.m | diff -q Testing\ Support/$1FormattedExample.m - | wc -l)
+    if [ "$difference" -gt 0 ]; then
+        echo -e "Tests fail. Run\n\t diff <(./format-objc-file-dry-run.sh 'Testing Support/$1UnformattedExample.m') 'Testing Support/$1FormattedExample.m' \nto see why."
+        exit $difference
+    fi
 
-difference=$(./format-objc-file-dry-run.sh Testing\ Support/ExemptViaPragmaUnformattedExample.m | diff -q Testing\ Support/ExemptViaPragmaFormattedExample.m - | wc -l)
-if [ "$difference" -gt 0 ]; then
-    echo -e "Tests fail. Run\n\t diff <(./format-objc-file-dry-run.sh Testing\ Support/ExemptViaPragmaUnformattedExample.m) Testing\ Support/ExemptViaPragmaFormattedExample.m \nto see why."
-    exit $difference
-fi
+    # Test that the formatted version does not need further formatting
+    difference=$(./format-objc-file-dry-run.sh Testing\ Support/$1FormattedExample.m | diff -q Testing\ Support/$1FormattedExample.m - | wc -l)
+    if [ "$difference" -gt 0 ]; then
+        echo -e "Tests fail. Run\n\t diff <(./format-objc-file-dry-run.sh 'Testing Support/$1FormattedExample.m') 'Testing Support/$1FormattedExample.m' \nto see why."
+        exit $difference
+    fi
 
-difference=$(./format-objc-file-dry-run.sh Testing\ Support/ExemptViaCommentUnformattedExample.m | diff -q Testing\ Support/ExemptViaCommentFormattedExample.m - | wc -l)
-if [ "$difference" -gt 0 ]; then
-    echo -e "Tests fail. Run\n\t diff <(./format-objc-file-dry-run.sh Testing\ Support/ExemptViaCommentUnformattedExample.m) Testing\ Support/ExemptViaCommentFormattedExample.m \nto see why."
-    exit $difference
-fi
+    # Test that the in-place behavior does not differ from stdout
+    cp "Testing Support/$1UnformattedExample.m" "Testing Support/$1FormattedInPlace.m"
+    ./format-objc-file.sh "Testing Support/$1FormattedInPlace.m"
+    difference=$(./format-objc-file-dry-run.sh Testing\ Support/$1UnformattedExample.m | diff -q Testing\ Support/$1FormattedInPlace.m - | wc -l)
+    if [ "$difference" -gt 0 ]; then
+        echo -e "Tests fail. Run\n\t diff <(./format-objc-file-dry.sh Testing\ Support/$1UnformattedExample.m) Testing\ Support/$1FormattedInPlace.m \nto see why."
+        echo "Then, remove the temporary file Testing\ Support/$1FormattedInPlace.m"
+        exit $difference
+    fi
+    rm "Testing Support/$1FormattedInPlace.m"
+}
+
+runTest ""
+runTest "ExemptViaPragma"
+runTest "ExemptViaComment"
 
 echo "Tests pass"
