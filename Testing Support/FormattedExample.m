@@ -160,6 +160,15 @@ struct Update {
     [self methodWithParams:(id)nil another:NO];
     // This is fine because it's a macro and not an operator.
     [self methodWithParams:NSStringFromClass(self.class) another:NO];
+    // The parentheses need to not have a semicolon added
+    NSDateComponents *todayComp = [calendar components:(NSCalendarUnitYear |
+                                                        NSCalendarUnitMonth |
+                                                        NSCalendarUnitDay |
+                                                        NSCalendarUnitWeekday |
+                                                        NSCalendarUnitHour |
+                                                        NSCalendarUnitMinute |
+                                                        NSCalendarUnitSecond)
+                                              fromDate:today];
 }
 
 - (void)shortMethod {}
