@@ -35,5 +35,6 @@ function runTest() {
 runTest ""
 runTest "ExemptViaPragma"
 runTest "ExemptViaComment"
+runTest "Unicode"
 
 echo "Tests pass"
