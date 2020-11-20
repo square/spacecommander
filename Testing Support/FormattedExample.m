@@ -2,6 +2,8 @@
 #import @"XYZGeometry.h"
 #import "Blah.h"
 #import <Great.h>
+@import FooFramework;
+@import FooFramework.SubModule;
 
 
 #define FQCommonInitInterfaceDeclaration(className) -(void)_##className##_commonInit
@@ -11,6 +13,19 @@
 
 ThisIsAMacroThatIsMissingASemicolon();
 ThisIsAMacroThatIsMissingASemicolon();
+
+typedef NS_CLOSED_ENUM(NSInteger, X) {
+    XBeep,
+    XBoop
+};
+
+typedef NS_ENUM(NSUInteger, MyEnum) {
+    MyEnumValueA,
+    MyEnumValueB,
+    MyEnumValueC,
+};
+
+// extern NSString *MyEnumGetDescription(MyEnum value) NS_SWIFT_NAME(getter:MyEnum.description(self:));
 
 #if __has_include(<SafariServices/SafariServices.h>)
 #endif
@@ -39,19 +54,18 @@ BOOL extraSemicolonsNotInsertedAfterCGStructInitializer()
                                                                                  width:hairline];
 }
 
-// Unfortunately, the first @property's spacing is ignored because clang-format is confused by the generic category interface.
-@interface NSDictionary <__covariant KeyType, __covariant ObjectType> (INSScrub)
+@interface NSDictionary <__covariant KeyType, __covariant ObjectType>(INSScrub)
 
-@property(nonatomic, assign, getter = isWackSpacingGetter, readonly) BOOL wackSpacing;
+@property (nonatomic, assign, getter=isWackSpacingGetter, readonly) BOOL wackSpacing;
 @property (readonly, copy) NSDictionary<KeyType, ObjectType> *ins_scrubbed;
 @property (nonatomic, assign, getter=isWackSpacingGetter, readonly) BOOL wackSpacing;
 
 @end
 
 
-@interface NSDictionary <__covariant KeyType, __covariant ObjectType> (INSScrub)
+@interface NSDictionary <__covariant KeyType, __covariant ObjectType>(INSScrub)
 
-@property(readonly, copy) NSDictionary<KeyType, ObjectType> *ins_scrubbedA;
+@property (readonly, copy) NSDictionary<KeyType, ObjectType> *ins_scrubbedA;
 @property (readonly, copy) NSDictionary<KeyType, ObjectType> *ins_scrubbedB;
 
 @end
@@ -100,7 +114,7 @@ struct Update {
         SQTypedKeyPath(MQItemControl, selected)
     ]];
     NSArray *testLiteral = @[ cool ];
-    NSDictionary *dictLiteral = @{ @"foo" : testLiteral };
+    NSDictionary *dictLiteral = @{@"foo" : testLiteral};
     SQCheckCondition(NO, , @"Will the commas stay together?");
 }
 
@@ -146,9 +160,10 @@ struct Update {
     [self setupTextFieldSignals:@[
         self.documentWidthField,
         self.documentHeightField,
-    ] solver:^(NSTextField *textField) {
-        return [self.representedObject solveEquationForTextField:textField];
-    }];
+    ]
+                         solver:^(NSTextField *textField) {
+                             return [self.representedObject solveEquationForTextField:textField];
+                         }];
 }
 
 - (void)paranthesisInMessage
@@ -160,6 +175,8 @@ struct Update {
     [self methodWithParams:(id)nil another:NO];
     // This is fine because it's a macro and not an operator.
     [self methodWithParams:NSStringFromClass(self.class) another:NO];
+    // There should be a space between the casted receiver and the message
+    [((NSNumber *)foo) boolValue];
     // The parentheses need to not have a semicolon added
     NSDateComponents *todayComp = [calendar components:(NSCalendarUnitYear |
                                                         NSCalendarUnitMonth |
