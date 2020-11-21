@@ -25,7 +25,7 @@ typedef NS_ENUM(NSUInteger, MyEnum) {
     MyEnumValueC,
 };
 
-// extern NSString *MyEnumGetDescription(MyEnum value) NS_SWIFT_NAME(getter:MyEnum.description(self:));
+extern NSString *MyEnumGetDescription(MyEnum value) NS_SWIFT_NAME(getter:MyEnum.description(self:));
 
 #if __has_include(<SafariServices/SafariServices.h>)
 #endif
