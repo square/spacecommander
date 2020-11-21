@@ -70,7 +70,7 @@ function format_objc_file_dry_run() {
 		/usr/bin/python3 "$DIR"/custom/InlineConstructorOnSingleLine.py |
 		/usr/bin/python3 "$DIR"/custom/MacroSemicolonAppender.py |
 		/usr/bin/python3 "$DIR"/custom/DoubleNewlineInserter.py |
-		"$DIR"/bin/clang-format-11.0.0 -style=file |
+		"$DIR"/bin/clang-format-12.0.0-244022a3cd75b51dcf1d2a5a822419492ce79e47 -style=file |
 		/usr/bin/python3 "$DIR"/custom/GenericCategoryLinebreakIndentation.py |
 		/usr/bin/python3 "$DIR"/custom/ParameterAfterBlockNewline.py |
 		/usr/bin/python3 "$DIR"/custom/HasIncludeSpaceRemover.py |

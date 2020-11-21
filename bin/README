@@ -1,3 +1,2 @@
-`clang-format-11.0.0` from:
- https://github.com/llvm/llvm-project/releases/download/llvmorg-11.0.0/clang+llvm-11.0.0-x86_64-apple-darwin.tar.xz
- (latest release as of 2020-11-17 from https://releases.llvm.org/download.html)
+`clang-format-12.0.0` from:
+ https://github.com/llvm/llvm-project based upon 244022a3cd75b51dcf1d2a5a822419492ce79e47, built with DCMAKE_BUILD_TYPE=Release

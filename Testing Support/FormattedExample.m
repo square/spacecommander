@@ -54,6 +54,7 @@ BOOL extraSemicolonsNotInsertedAfterCGStructInitializer()
                                                                                  width:hairline];
 }
 
+
 @interface NSDictionary <__covariant KeyType, __covariant ObjectType>(INSScrub)
 
 @property (nonatomic, assign, getter=isWackSpacingGetter, readonly) BOOL wackSpacing;
@@ -160,10 +161,9 @@ struct Update {
     [self setupTextFieldSignals:@[
         self.documentWidthField,
         self.documentHeightField,
-    ]
-                         solver:^(NSTextField *textField) {
-                             return [self.representedObject solveEquationForTextField:textField];
-                         }];
+    ] solver:^(NSTextField *textField) {
+        return [self.representedObject solveEquationForTextField:textField];
+    }];
 }
 
 - (void)paranthesisInMessage
@@ -188,7 +188,10 @@ struct Update {
                                               fromDate:today];
 }
 
-- (void)shortMethod {}
+- (void)shortMethod
+{
+}
+
 - (void)dictsInArray
 {
     NSArray *dictionaries = @[
@@ -212,20 +215,23 @@ BOOL CStyleMethod()
 
 INSAFSuccessBlock INSAPIClientModelSuccessHandler(Class mantleClass, NSString *__nullable keyPath, INSHTTPSuccess __nullable success, INSHTTPFailure __nullable failure)
 {
-    return INSAPIClientModelSuccessChain(mantleClass, keyPath, ^(__kindof INSModel *model, id _) {
-        if (success) {
-            success(model);
-        }
-    }, failure);
+    return INSAPIClientModelSuccessChain(
+        mantleClass, keyPath, ^(__kindof INSModel *model, id _) {
+            if (success) {
+                success(model);
+            }
+        }, failure);
 }
 
 - (void)fetchWithSuccess:(nullable dispatch_block_t)success failure:(nullable INSHTTPFailure)failure
 {
-    [self GET:@"data" parameters:nil success:INSAPIClientModelArraySuccessChain([INSModel class], nil, ^(INSModel *model, id responseObject) {
-        if (success) {
-            success();
-        }
-    }, failure) failure:failure];
+    [self GET:@"data" parameters:nil success:INSAPIClientModelArraySuccessChain(
+                                                 [INSModel class], nil, ^(INSModel *model, id responseObject) {
+                                                     if (success) {
+                                                         success();
+                                                     }
+                                                 }, failure)
+           failure:failure];
 }
 
 - (void)postWithSuccess:(nullable INSHTTPSuccess)success failure:(nullable INSHTTPFailure)failure
