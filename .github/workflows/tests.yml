@@ -1,0 +1,16 @@
+name: Tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  integration_tests:
+    name: Build and Test
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Run tests
+        run: ./test.sh
