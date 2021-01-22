@@ -8,8 +8,8 @@ Pod::Spec.new do |s|
   s.authors      = "Square, Inc."
   s.source       = { :git => "https://github.com/square/spacecommander.git", :tag => s.version }
   
-  s.ios.deployment_target = "8.0"
-  s.osx.deployment_target = "10.6"
+  s.ios.deployment_target = "9.0"
+  s.osx.deployment_target = "10.9"
 
   # Use this file to overcome CocoaPods limitation that at least one source file must be specified.
   s.source_files = "CocoaPodsDummy.m"
