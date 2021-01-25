@@ -2,6 +2,8 @@
 #import @"XYZGeometry.h"
 #import "Blah.h"
 #import <Great.h>
+@import FooFramework;
+@import FooFramework.SubModule;
 
 
 #define FQCommonInitInterfaceDeclaration(className) -(void)_##className##_commonInit
@@ -11,6 +13,19 @@
 
 ThisIsAMacroThatIsMissingASemicolon();
 ThisIsAMacroThatIsMissingASemicolon();
+
+typedef NS_CLOSED_ENUM(NSInteger, X) {
+    XBeep,
+    XBoop
+};
+
+typedef NS_ENUM(NSUInteger, MyEnum) {
+    MyEnumValueA,
+    MyEnumValueB,
+    MyEnumValueC,
+};
+
+extern NSString *MyEnumGetDescription(MyEnum value) NS_SWIFT_NAME(getter:MyEnum.description(self:));
 
 #if __has_include(<SafariServices/SafariServices.h>)
 #endif
@@ -39,19 +54,19 @@ BOOL extraSemicolonsNotInsertedAfterCGStructInitializer()
                                                                                  width:hairline];
 }
 
-// Unfortunately, the first @property's spacing is ignored because clang-format is confused by the generic category interface.
-@interface NSDictionary <__covariant KeyType, __covariant ObjectType> (INSScrub)
 
-@property(nonatomic, assign, getter = isWackSpacingGetter, readonly) BOOL wackSpacing;
+@interface NSDictionary <__covariant KeyType, __covariant ObjectType>(INSScrub)
+
+@property (nonatomic, assign, getter=isWackSpacingGetter, readonly) BOOL wackSpacing;
 @property (readonly, copy) NSDictionary<KeyType, ObjectType> *ins_scrubbed;
 @property (nonatomic, assign, getter=isWackSpacingGetter, readonly) BOOL wackSpacing;
 
 @end
 
 
-@interface NSDictionary <__covariant KeyType, __covariant ObjectType> (INSScrub)
+@interface NSDictionary <__covariant KeyType, __covariant ObjectType>(INSScrub)
 
-@property(readonly, copy) NSDictionary<KeyType, ObjectType> *ins_scrubbedA;
+@property (readonly, copy) NSDictionary<KeyType, ObjectType> *ins_scrubbedA;
 @property (readonly, copy) NSDictionary<KeyType, ObjectType> *ins_scrubbedB;
 
 @end
@@ -100,7 +115,7 @@ struct Update {
         SQTypedKeyPath(MQItemControl, selected)
     ]];
     NSArray *testLiteral = @[ cool ];
-    NSDictionary *dictLiteral = @{ @"foo" : testLiteral };
+    NSDictionary *dictLiteral = @{@"foo" : testLiteral};
     SQCheckCondition(NO, , @"Will the commas stay together?");
 }
 
@@ -160,9 +175,23 @@ struct Update {
     [self methodWithParams:(id)nil another:NO];
     // This is fine because it's a macro and not an operator.
     [self methodWithParams:NSStringFromClass(self.class) another:NO];
+    // There should be a space between the casted receiver and the message
+    [((NSNumber *)foo) boolValue];
+    // The parentheses need to not have a semicolon added
+    NSDateComponents *todayComp = [calendar components:(NSCalendarUnitYear |
+                                                        NSCalendarUnitMonth |
+                                                        NSCalendarUnitDay |
+                                                        NSCalendarUnitWeekday |
+                                                        NSCalendarUnitHour |
+                                                        NSCalendarUnitMinute |
+                                                        NSCalendarUnitSecond)
+                                              fromDate:today];
 }
 
-- (void)shortMethod {}
+- (void)shortMethod
+{
+}
+
 - (void)dictsInArray
 {
     NSArray *dictionaries = @[
@@ -186,20 +215,23 @@ BOOL CStyleMethod()
 
 INSAFSuccessBlock INSAPIClientModelSuccessHandler(Class mantleClass, NSString *__nullable keyPath, INSHTTPSuccess __nullable success, INSHTTPFailure __nullable failure)
 {
-    return INSAPIClientModelSuccessChain(mantleClass, keyPath, ^(__kindof INSModel *model, id _) {
-        if (success) {
-            success(model);
-        }
-    }, failure);
+    return INSAPIClientModelSuccessChain(
+        mantleClass, keyPath, ^(__kindof INSModel *model, id _) {
+            if (success) {
+                success(model);
+            }
+        }, failure);
 }
 
 - (void)fetchWithSuccess:(nullable dispatch_block_t)success failure:(nullable INSHTTPFailure)failure
 {
-    [self GET:@"data" parameters:nil success:INSAPIClientModelArraySuccessChain([INSModel class], nil, ^(INSModel *model, id responseObject) {
-        if (success) {
-            success();
-        }
-    }, failure) failure:failure];
+    [self GET:@"data" parameters:nil success:INSAPIClientModelArraySuccessChain(
+                                                 [INSModel class], nil, ^(INSModel *model, id responseObject) {
+                                                     if (success) {
+                                                         success();
+                                                     }
+                                                 }, failure)
+           failure:failure];
 }
 
 - (void)postWithSuccess:(nullable INSHTTPSuccess)success failure:(nullable INSHTTPFailure)failure

@@ -3,8 +3,46 @@
 # Formats an Objective-C file, replacing it without a backup.
 # Copyright 2015 Square, Inc
 
+set -o errexit
+set -o nounset
+set -o pipefail
+
 export CDPATH=""
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+DRY_RUN=0
+FILE=""
+
+function help() {
+	echo "$0 - formats an objc file"
+	echo " "
+	echo "$0 [options] file"
+	echo " "
+	echo "options:"
+	echo "-h, --help     show brief help"
+	echo "-d, --dry-run  output formatted file to STDOUT, instead of modifying it"
+}
+
+while test $# -gt 0; do
+	case "$1" in
+	-h | --help)
+		help
+		exit 0
+		;;
+	-d | --dry-run)
+		DRY_RUN=1
+		shift
+		;;
+	*)
+		if [ -n "$FILE" ]; then
+			echo "May only provide a single file"
+			help
+			exit 1
+		fi
+		FILE="$1"
+		shift
+		;;
+	esac
+done
 
 if [ ! -e ".clang-format" ]; then
 	echo "Couldn't find .clang-format file, unable to format files. Please setup this repo by running the setup-repo.sh script from your repo's top level."
@@ -12,27 +50,47 @@ if [ ! -e ".clang-format" ]; then
 	exit 1
 fi
 
-# "#pragma Formatter Exempt" or "// MARK: Formatter Exempt" means don't format this file.
-# Read the first line and trim it.
-line="$(head -1 "$1" | xargs)" 
-[ "$line" == "#pragma Formatter Exempt" -o "$line" == "// MARK: Formatter Exempt" ] && exit 0
+if [ ! -n "$FILE" ]; then
+	echo "Must provide a file to format"
+	help
+	exit 1
+fi
 
-# Fix an edge case with array / dictionary literals that confuses clang-format
-python "$DIR"/custom/LiteralSymbolSpacer.py "$1"
-# The formatter gets confused by C++ inline constructors that are broken onto multiple lines
-python "$DIR"/custom/InlineConstructorOnSingleLine.py "$1"
-# Add a semicolon at the end of simple macros
-python "$DIR"/custom/MacroSemicolonAppender.py "$1"
-# Add an extra newline before @implementation and @interface
-python "$DIR"/custom/DoubleNewlineInserter.py "$1"
+function format_objc_file_dry_run() {
+	# "#pragma Formatter Exempt" or "// MARK: Formatter Exempt" means don't format this file.
+	# Read the first line and trim it.
+	line="$(head -1 "$FILE" | xargs)"
+	if [ "$line" == "#pragma Formatter Exempt" -o "$line" == "// MARK: Formatter Exempt" ]; then
+		cat "$1"
+		return
+	fi
 
-# Run clang-format
-"$DIR"/bin/clang-format-3.8-custom -i -style=file "$1" ;
-# Fix an issue with clang-format getting confused by categories with generic expressions.
-python "$DIR"/custom/GenericCategoryLinebreakIndentation.py "$1"
-# Fix an issue with clang-format breaking up a lone parameter onto a newline after a block literal argument.
-python "$DIR"/custom/ParameterAfterBlockNewline.py "$1"
-# Fix an issue with clang-format inserting spaces in a preprocessor macro.
-python "$DIR"/custom/HasIncludeSpaceRemover.py "$1"
-# Add a newline at the end of the file
-python "$DIR"/custom/NewLineAtEndOfFileInserter.py "$1"
+	cat "$1" |
+		/usr/bin/python3 "$DIR"/custom/LiteralSymbolSpacer.py |
+		/usr/bin/python3 "$DIR"/custom/InlineConstructorOnSingleLine.py |
+		/usr/bin/python3 "$DIR"/custom/MacroSemicolonAppender.py |
+		/usr/bin/python3 "$DIR"/custom/DoubleNewlineInserter.py |
+		"$DIR"/bin/clang-format-12.0.0-244022a3cd75b51dcf1d2a5a822419492ce79e47 -style=file |
+		/usr/bin/python3 "$DIR"/custom/GenericCategoryLinebreakIndentation.py |
+		/usr/bin/python3 "$DIR"/custom/ParameterAfterBlockNewline.py |
+		/usr/bin/python3 "$DIR"/custom/HasIncludeSpaceRemover.py |
+		/usr/bin/python3 "$DIR"/custom/NewLineAtEndOfFileInserter.py
+}
+
+function format_objc_file() {
+	tempFile="$(mktemp)"
+	status=0
+	format_objc_file_dry_run "$1" >"$tempFile" || status=$?
+	if [ $status -eq 0 ]; then
+		mv "$tempFile" "$1"
+	else
+		rm -f "$tempFile"
+		exit $status
+	fi
+}
+
+if [ $DRY_RUN -eq 0 ]; then
+	format_objc_file "$FILE"
+else
+	format_objc_file_dry_run "$FILE"
+fi

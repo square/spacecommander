@@ -16,7 +16,7 @@ class MacroSemicolonAppender(AbstractCustomFormatter):
             # Criteria for a macro in need of semicolon:
             # - Starts with uppercase letter, ends with )
             stripped_line = line.strip()
-            needs_semicolon = len(stripped_line) > 0 and stripped_line[0].isupper() and stripped_line.endswith(")")
+            needs_semicolon = len(stripped_line) > 0 and stripped_line[0].isupper() and stripped_line.endswith(")") and "(" in stripped_line
             # - The line doesn't contain any spaces before a ( [that might mean it's a C function]
             needs_semicolon = needs_semicolon and not " " in stripped_line.split("(")[0].strip()
             # - The next line (if there is one) does not start with a brace.
