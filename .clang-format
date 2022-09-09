@@ -1,5 +1,9 @@
 ---
-Language: ObjC
+# `Language` intentionally left blank to apply these rules
+# as the default formatting options.
+# This addresses an issue which can occur when clang-format
+# decides a header looks more like c++ than objc.
+
 # BasedOnStyle:  Google
 AccessModifierOffset: -1
 ConstructorInitializerIndentWidth: 4
