@@ -41,5 +41,6 @@ runTest "ExemptViaPragma" ".m"
 runTest "ExemptViaComment" ".m"
 runTest "Unicode" ".m"
 runTest "ImportOnlyHeader" ".h"
+runTest "QuotesInFirstLine" ".m"
 
 echo "Tests pass"
