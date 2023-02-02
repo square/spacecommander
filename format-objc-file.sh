@@ -60,7 +60,8 @@ function format_objc_file_dry_run() {
 	# "#pragma Formatter Exempt" or "// MARK: Formatter Exempt" means don't format this file.
 	# Read the first line and trim it.
 	line="$(head -1 "$FILE" |
-		tr -d "'\"" |
+		sed "s/\'/\\\'/g" |
+		sed 's/\"/\\\"/g' |
 		xargs)"
 	if [ "$line" == "#pragma Formatter Exempt" -o "$line" == "// MARK: Formatter Exempt" ]; then
 		cat "$1"
