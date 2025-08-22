@@ -1,2 +1,2 @@
-`clang-format-12.0.0` from:
- https://github.com/llvm/llvm-project based upon 244022a3cd75b51dcf1d2a5a822419492ce79e47, built with DCMAKE_BUILD_TYPE=Release
+`clang-format-19.1.4` from:
+ https://github.com/swift/llvm-project based upon https://github.com/swiftlang/llvm-project/releases/tag/swift-6.1.1-RELEASE, built with DCMAKE_BUILD_TYPE=Release

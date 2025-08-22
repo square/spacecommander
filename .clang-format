@@ -38,8 +38,10 @@ ExperimentalAutoDetectBinPacking: false
 IndentCaseLabels: true
 IndentWrappedFunctionNames: false
 IndentFunctionDeclarationAfterType: false
+InsertNewlineAtEOF: true
 MaxEmptyLinesToKeep: 2
-KeepEmptyLinesAtTheStartOfBlocks: false
+KeepEmptyLines:
+    AtStartOfBlock: false
 NamespaceIndentation: Inner
 ObjCBlockIndentWidth: 4
 ObjCBreakBeforeNestedBlockParam: false
@@ -53,6 +55,9 @@ PenaltyExcessCharacter: 1000000
 PenaltyReturnTypeOnItsOwnLine: 200
 PointerAlignment: Right
 SpacesBeforeTrailingComments: 1
+SpacesInLineCommentPrefix:
+    Minimum: 0
+    Maximum: -1
 Cpp11BracedListStyle: true
 Standard: Auto
 IndentWidth: 4
@@ -73,6 +78,7 @@ BraceWrapping:
     IndentBraces: false
     SplitEmptyFunction: false
 
+RemoveBracesLLVM: false
 SpacesInParentheses: false
 SpacesInSquareBrackets: false
 SpacesInAngles: false
