@@ -73,11 +73,10 @@ function format_objc_file_dry_run() {
 		/usr/bin/python3 "$DIR"/custom/InlineConstructorOnSingleLine.py |
 		/usr/bin/python3 "$DIR"/custom/MacroSemicolonAppender.py |
 		/usr/bin/python3 "$DIR"/custom/DoubleNewlineInserter.py |
-		"$DIR"/bin/clang-format-12.0.0-244022a3cd75b51dcf1d2a5a822419492ce79e47 -style=file |
+		"$DIR"/bin/clang-format-19.1.4-fd3b4acf03680a2dafbf1d40b562f5dff1c4436f -style=file |
 		/usr/bin/python3 "$DIR"/custom/GenericCategoryLinebreakIndentation.py |
 		/usr/bin/python3 "$DIR"/custom/ParameterAfterBlockNewline.py |
-		/usr/bin/python3 "$DIR"/custom/HasIncludeSpaceRemover.py |
-		/usr/bin/python3 "$DIR"/custom/NewLineAtEndOfFileInserter.py
+		/usr/bin/python3 "$DIR"/custom/HasIncludeSpaceRemover.py
 }
 
 function format_objc_file() {

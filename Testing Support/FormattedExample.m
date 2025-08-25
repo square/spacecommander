@@ -97,8 +97,8 @@ struct Update {
     Update(UpdateType t, const Slice &v) : type(t), value(v.data(), v.size()) {}
 };
 
-/* Same deal here, don't mess with adding newlines after this comment block 
- * with a different comment style 
+/* Same deal here, don't mess with adding newlines after this comment block
+ * with a different comment style
  * and trailing spaces */
 @implementation Foo
 @end
@@ -189,8 +189,7 @@ struct Update {
 }
 
 - (void)shortMethod
-{
-}
+{}
 
 - (void)dictsInArray
 {
@@ -215,23 +214,20 @@ BOOL CStyleMethod()
 
 INSAFSuccessBlock INSAPIClientModelSuccessHandler(Class mantleClass, NSString *__nullable keyPath, INSHTTPSuccess __nullable success, INSHTTPFailure __nullable failure)
 {
-    return INSAPIClientModelSuccessChain(
-        mantleClass, keyPath, ^(__kindof INSModel *model, id _) {
-            if (success) {
-                success(model);
-            }
-        }, failure);
+    return INSAPIClientModelSuccessChain(mantleClass, keyPath, ^(__kindof INSModel *model, id _) {
+        if (success) {
+            success(model);
+        }
+    }, failure);
 }
 
 - (void)fetchWithSuccess:(nullable dispatch_block_t)success failure:(nullable INSHTTPFailure)failure
 {
-    [self GET:@"data" parameters:nil success:INSAPIClientModelArraySuccessChain(
-                                                 [INSModel class], nil, ^(INSModel *model, id responseObject) {
-                                                     if (success) {
-                                                         success();
-                                                     }
-                                                 }, failure)
-           failure:failure];
+    [self GET:@"data" parameters:nil success:INSAPIClientModelArraySuccessChain([INSModel class], nil, ^(INSModel *model, id responseObject) {
+                                         if (success) {
+                                             success();
+                                         }
+                                     }, failure) failure:failure];
 }
 
 - (void)postWithSuccess:(nullable INSHTTPSuccess)success failure:(nullable INSHTTPFailure)failure
