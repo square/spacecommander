@@ -81,14 +81,9 @@ function format_objc_file_dry_run() {
 	fi
 
 	cat "$1" |
-		/usr/bin/python3 "$DIR"/custom/LiteralSymbolSpacer.py |
-		/usr/bin/python3 "$DIR"/custom/InlineConstructorOnSingleLine.py |
-		/usr/bin/python3 "$DIR"/custom/MacroSemicolonAppender.py |
-		/usr/bin/python3 "$DIR"/custom/DoubleNewlineInserter.py |
+		/usr/bin/python3 "$DIR"/custom/PreClangFormatFormatter.py |
 		"$DIR"/bin/clang-format-19.1.4-fd3b4acf03680a2dafbf1d40b562f5dff1c4436f "$style" |
-		/usr/bin/python3 "$DIR"/custom/GenericCategoryLinebreakIndentation.py |
-		/usr/bin/python3 "$DIR"/custom/ParameterAfterBlockNewline.py |
-		/usr/bin/python3 "$DIR"/custom/HasIncludeSpaceRemover.py
+		/usr/bin/python3 "$DIR"/custom/PostClangFormatFormatter.py
 }
 
 function format_objc_file() {
